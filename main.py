@@ -38,9 +38,9 @@ tabela_btn = ttk.Frame(root)
 tabela_btn.pack(pady=20)
 
 # Criar os botòes 
-btn_ver_frete = ttk.Button(tabela_btn, text="Ver fretes")
+btn_ver_frete = ttk.Button(tabela_btn, text="Ver fretes",command=exibir_fretes)
 btn_add_frete = ttk.Button(tabela_btn, text="Add fretes", command=abrir_formulario_frete)
-btn_ver_cliente = ttk.Button(tabela_btn, text="Ver clientes")
+btn_ver_cliente = ttk.Button(tabela_btn, text="Ver clientes", command=exibir_cliente)
 btn_add_cliente = ttk.Button(tabela_btn, text="Add cliente", command=abrir_formulario_cliente)
 
 # Exibir os btns
