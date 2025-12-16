@@ -1,5 +1,6 @@
 import csv
 import os # é as funções do sitema operacional (operational system)
+from tkinter import ttk
 
 dados_fretes = "dados_fretes.csv"
 # dizendo o nome do arquivo
@@ -58,7 +59,7 @@ def add_fretes(registro):
         # Para adicionar os dados no CSV
         escrever.writerow(registro)
 
-# ---------------------- CLIENTE --------------------------------
+# ---------------------- ADD CLIENTE --------------------------------
 dados_clientes = "dados_clientes.csv"
 
 
@@ -102,3 +103,86 @@ def add_clientes(registro):
         
         escrever.writerow(registro)
     
+# -------------- VER FRETES ---------------------------------------
+def exibir_fretes():
+    # Sempre que exibir dados, colocar fator correção
+    if not os.path.isfile(dados_fretes):
+        tk.Message.showerror("Erro", "Arquivo não encontrado")
+        return 
+    
+    # Criar a janela da tabela de fretes
+    tabela_fretes = tk.Toplevel()
+    tabela_fretes.title("Fretes")
+    tabela_fretes.geometry("750x500")
+
+    # Dizer a tabela os campos que ela tem (em colunas)
+    colunas_fretes = campo_fretes
+
+    # Vamos juntar a tabela com as colunas (modo árvore)
+    tabela = ttk.Treeview(tabela_fretes,columns=colunas_fretes, show="headings")
+    # o Treeview é o comano para mostrar os dados
+    # nele tenho que colocar 1 - onde, 2 - colunas, 3 - cabeçalhos
+    # ficando ttk.Treeview(NOME DA JANELA, columns=COLUNAS, SHOW="headings")
+    tabela.pack(fill="both")
+
+    # Configuração colunas
+    for colunas in colunas_fretes:
+        # chamo o campo cabeçaalho para escrever o cabeçalho das colunas
+        tabela.heading(colunas, text=colunas)
+        # chamo o campo column para configurar o tamanho de cada uma
+        tabela.column(colunas, width=100)
+
+    # Ler os dados do Csv
+    with open(dados_fretes,"r", encoding="utf-8") as arquivo:
+        leitor = csv.DictReader(arquivo)
+        # ler o Csv
+
+        # mostrar o csv
+        for linha in leitor:
+            # para cada linha do Csv que o leitor leu
+            # vou criar um campo com valor
+            valor = [linha.get(colunas, "") for colunas in colunas_fretes]
+            # o comando insert é para colocar os valores nas linhas e nas colunas 
+            tabela.insert("", "end", values=valor)
+
+# -------------------- VER CLIENTE ------------------------------
+def exibir_cliente():
+    # Sempre que exibir dados, colocar fator correção
+    if not os.path.isfile(dados_clientes):
+        tk.Message.showerror("Erro", "Arquivo não encontrado")
+        return 
+    
+    # Criar a janela da tabela de fretes
+    tabela_clientes = tk.Toplevel()
+    tabela_clientes.title("Clientes")
+    tabela_clientes.geometry("750x500")
+
+    # Dizer a tabela os campos que ela tem (em colunas)
+    colunas_clientes = campo_clientes
+
+    # Vamos juntar a tabela com as colunas (modo árvore)
+    tabela = ttk.Treeview(tabela_clientes,columns=colunas_clientes, show="headings")
+    # o Treeview é o comano para mostrar os dados
+    # nele tenho que colocar 1 - onde, 2 - colunas, 3 - cabeçalhos
+    # ficando ttk.Treeview(NOME DA JANELA, columns=COLUNAS, SHOW="headings")
+    tabela.pack(fill="both")
+
+    # Configuração colunas
+    for colunas in colunas_clientes:
+        # chamo o campo cabeçaalho para escrever o cabeçalho das colunas
+        tabela.heading(colunas, text=colunas)
+        # chamo o campo column para configurar o tamanho de cada uma
+        tabela.column(colunas, width=100)
+
+    # Ler os dados do Csv
+    with open(dados_clientes,"r", encoding="utf-8") as arquivo:
+        leitor = csv.DictReader(arquivo)
+        # ler o Csv
+
+        # mostrar o csv
+        for linha in leitor:
+            # para cada linha do Csv que o leitor leu
+            # vou criar um campo com valor
+            valor = [linha.get(colunas, "") for colunas in colunas_clientes]
+            # o comando insert é para colocar os valores nas linhas e nas colunas 
+            tabela.insert("", "end", values=valor)
